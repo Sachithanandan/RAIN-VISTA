@@ -1,0 +1,65 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0 2% 0 2%;
+    padding: 0 2% 0 2%;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.report-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 3%;
+}
+
+.report-content h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.report-content p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.report-content strong {
+    font-weight: bold;
+}
+
+.analysis-section {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #eef7f8;
+    border-left: 5px solid #00aaff;
+    border-radius: 5px;
+}
+
+.analysis-section strong {
+    color: #0077cc;
+}
+
+.conclusion {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #e7f3fe;
+    border-left: 5px solid #2196f3;
+}
+
+.graph-container {
+    margin-top: 30px;
+}
+
+.graph {
+    height: 50%;
+    width: 100%;
+    margin-top: 5%;
+    border-radius: 2%;
+    background-color: #fff;
+}
+
+::marker{
+    color: transparent;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>RainVista - Weather Dashboard</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="../css/navbar.css">
+</head>
+<body>
+  <!-- Nav Bar -->
+<div class="navbar">
+  <div class="logo">RainVista</div>
+  <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/forecast">Predict</a>
+      <a href="/stats">Data Analysis</a>
+      <a href="/standard_conditions">Standard Conditions</a>
+  </div>
+  <div class="menu-icon">
+      <span>&#9776;</span>
+  </div>
+</div>
+
+  <h1>FORECASTING</h1>
+  <div class="container">
+    <div class="weather-input">
+      <h3 style="color:#fff">Enter a City Name</h3>
+      <input class="city-input" type="text" placeholder="E.g., Theni">
+      <button class="search-btn">Search</button>
+      <div class="separator"></div>
+      <button class="location-btn">Use Current Location</button>
+      <div id="map" class="map-container"></div>
+    </div>
+    <div class="weather-data">
+      <div class="current-weather">
+        <div class="details">
+          <h2>_______ ( ______ )</h2>
+          <h6>Temperature: __°C</h6>
+          <h6>Wind: __ M/S</h6>
+          <h6>Humidity: __%</h6>
+        </div>
+      </div>
+      <div class="days-forecast">
+        <h2 style="color : #fff">5-Day Forecast</h2>
+        <ul class="weather-cards">
+          <!-- Weather cards will be dynamically inserted here -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="viewReport">
+    <button class="view-report-btn" onclick="navigateToReport()">View Report</button>
+  </div>
+  <script>
+    const menuIcon = document.querySelector('.menu-icon');
+    const navbar = document.querySelector('.navbar');
+
+    menuIcon.addEventListener('click', () => {
+        navbar.classList.toggle('active');
+    });
+</script>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="../js/script.js" defer></script>
+</body>
+</html>

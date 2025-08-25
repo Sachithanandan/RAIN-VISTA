@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    justify-content: space-around; /* Distributes space evenly between items */
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+.standard-values, .rainfall-graph {
+    flex: 1; /* Make both sections take equal space */
+    padding: 20px;
+    background-color: #f0f8ff;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Adds a subtle shadow for better definition */
+}
+
+.standard-values strong, .rainfall-graph strong {
+    color: #2c3e50;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.standard-values p, .rainfall-graph p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #34495e;
+}
+
+.standard-values p strong, .rainfall-graph .bar-container p strong {
+    color: #2980b9;
+}
+
+.rainfall-graph .bar-container {
+    margin-bottom: 10px;
+}
+
+.rainfall-graph .bar {
+    height: 20px;
+    border-radius: 5px;
+    text-align: right;
+    color: white;
+    padding-right: 5px;
+    font-size: 14px;
+    line-height: 20px;
+}

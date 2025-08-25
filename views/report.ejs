@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/report.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <title>Weather Report</title>
+</head>
+<body>
+    <!-- Nav Bar -->
+<div class="navbar">
+    <div class="logo">RainVista</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/forecast">Predict</a>
+        <a href="/stats">Data Analysis</a>
+        <a href="/standard_conditions">Standard Conditions</a>
+    </div>
+    <div class="menu-icon">
+        <span>&#9776;</span>
+    </div>
+  </div>
+    <!-- Report -->
+    <div class="report-content"></div>
+
+    <!-- <div class="container">
+        <div class="standard-values">
+            <strong>Rainfall Analysis Standard Values:</strong><br>
+            <p><strong>High Cloud Cover:</strong> &gt; 70%</p>
+            <p><strong>Moderate Cloud Cover:</strong> 50% - 70%</p>
+            <p><strong>High Humidity:</strong> &gt; 80%</p>
+            <p><strong>Moderate Humidity:</strong> 60% - 80%</p>
+            <p><strong>Low Atmospheric Pressure:</strong> &lt; 1010 hPa</p>
+            <p><strong>Moderate Atmospheric Pressure:</strong> 1010 - 1020 hPa</p>
+            <p><strong>Temperature:</strong> If temperature is lower than the dew point, condensation and rainfall are more likely.</p>
+            <p><strong>Wind Speed:</strong> Wind speeds &gt; 15 km/h can indicate storm systems, increasing rainfall likelihood.</p>
+            <p><strong>Precipitable Water:</strong> &gt; 20 mm can indicate sufficient moisture in the air for rainfall.</p>
+        </div>
+    
+        <div class="rainfall-graph">
+            <strong>Rainfall Likelihood Factors</strong><br>
+            <div class="bar-container">
+                <p><strong>High Cloud Cover:</strong></p>
+                <div class="bar" style="width: 70%; background-color: #3498db;">&gt; 70%</div>
+            </div>
+            <div class="bar-container">
+                <p><strong>Moderate Cloud Cover:</strong></p>
+                <div class="bar" style="width: 60%; background-color: #2ecc71;">50% - 70%</div>
+            </div>
+            <div class="bar-container">
+                <p><strong>High Humidity:</strong></p>
+                <div class="bar" style="width: 80%; background-color: #e74c3c;">&gt; 80%</div>
+            </div>
+            <div class="bar-container">
+                <p><strong>Moderate Humidity:</strong></p>
+                <div class="bar" style="width: 70%; background-color: #f39c12;">60% - 80%</div>
+            </div>
+            <div class="bar-container">
+                <p><strong>Low Atmospheric Pressure:</strong></p>
+                <div class="bar" style="width: 50%; background-color: #9b59b6;">&lt; 1010 hPa</div>
+            </div>
+            <div class="bar-container">
+                <p><strong>Moderate Atmospheric Pressure:</strong></p>
+                <div class="bar" style="width: 60%; background-color: #16a085;">1010 - 1020 hPa</div>
+            </div>
+            <div class="bar-container">
+                <p><strong>Wind Speed:</strong></p>
+                <div class="bar" style="width: 40%; background-color: #2980b9;">&gt; 15 km/h</div>
+            </div>
+            <div class="bar-container">
+                <p><strong>Precipitable Water:</strong></p>
+                <div class="bar" style="width: 90%; background-color: #27ae60;">&gt; 20 mm</div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Graph -->
+    <div class="graph-container">
+        <canvas id="weatherGraph" class="graph"></canvas>
+        <canvas id="parameterBarGraph" class="graph"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        // Fetch the API key from localStorage
+        const API_KEY = '5d06eb37590d61c048926d8d37b513ac';
+
+        if (!API_KEY) {
+            alert('API Key is missing! Please ensure the API key is correctly set.');
+            window.location.href = '/'; // Redirect to the main page
+        }
+
+        // Retrieve city details from localStorage
+        const cityDetails = JSON.parse(localStorage.getItem('cityDetails'));
+
+        if (cityDetails) {
+            const { name: cityName, coord } = cityDetails;
+
+            if (cityName && coord.lat && coord.lon) {
+                const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${coord.lat}&lon=${coord.lon}&units=metric&appid=${API_KEY}`;
+
+                fetch(WEATHER_API_URL)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.cityName = cityName; // Add city name to data for reporting
+                        const report = generateRainfallReport(data);
+                        document.querySelector(".report-content").innerHTML = report;
+                        generateRainfallGraph(data);
+                        generateParameterBarGraph(data);
+                    })
+                    .catch(error => {
+                        console.error("Error fetching weather data:", error);
+                        alert("An error occurred while fetching the weather forecast!");
+                    });
+            } else {
+                alert("Missing location data. Please return to the main page and try again.");
+                window.location.href = '/'; // Redirect to the main page
+            }
+        } else {
+            alert("City details are missing. Please return to the main page and try again.");
+            window.location.href = '/'; // Redirect to the main page
+        }
+
+        // Function to generate a detailed weather report explaining rainfall predictions
+        const generateRainfallReport = (weatherItem) => {
+            const cloudCover = weatherItem.clouds.all; // Cloud cover percentage
+            const humidity = weatherItem.main.humidity; // Humidity percentage
+            const pressure = weatherItem.main.pressure; // Atmospheric pressure in hPa
+            const windSpeed = weatherItem.wind.speed; // Wind speed in m/s
+            const description = weatherItem.weather[0].description; // Weather description
+
+            // Initialize report with basic weather information
+            let report = `<h2>Weather Report for ${weatherItem.cityName}</h2>`;
+            report += `<p><strong>Condition:</strong> ${capitalizeFirstLetter(description)}</p>`;
+            report += `<p><strong>Cloud Cover:</strong> ${cloudCover}%</p>`;
+            report += `<p><strong>Humidity:</strong> ${humidity}%</p>`;
+            report += `<p><strong>Pressure:</strong> ${pressure} hPa</p>`;
+            report += `<p><strong>Wind Speed:</strong> ${windSpeed} m/s</p>`;
+
+            // Analyzing the data to explain the reason for rainfall or slight rainfall
+            report += `<div class="analysis-section"><strong>Analysis:</strong><br>`;
+
+            if (cloudCover > 70 && humidity > 80 && pressure < 1010) {
+                report += `<p>Rainfall is expected due to the following reasons:</p>`;
+                report += `<ul>`;
+                report += `<li><strong>High Cloud Cover:</strong> With a cloud cover of ${cloudCover}%, the sky is significantly overcast. This means there is a high concentration of clouds capable of producing rain.</li>`;
+                report += `<li><strong>High Humidity:</strong> The humidity level at ${humidity}% indicates that the air is saturated with moisture. High humidity levels often lead to precipitation when combined with sufficient cloud cover.</li>`;
+                report += `<li><strong>Low Atmospheric Pressure:</strong> The atmospheric pressure is relatively low at ${pressure} hPa. Low pressure is typically associated with storm systems and rainfall, as it encourages air to rise and cool, leading to condensation and rain.</li>`;
+                report += `</ul>`;
+            } else if (cloudCover > 50 && humidity > 60 && pressure < 1020) {
+                report += `<p>Slight rainfall is likely due to the following factors:</p>`;
+                report += `<ul>`;
+                report += `<li><strong>Moderate Cloud Cover:</strong> The cloud cover is ${cloudCover}%, which suggests some cloudiness but not enough to cause heavy rain. These clouds may produce light showers.</li>`;
+                report += `<li><strong>Moderate Humidity:</strong> Humidity at ${humidity}% is sufficient to hold moisture in the air, which can result in slight rainfall, especially when combined with moderate cloud cover.</li>`;
+                report += `<li><strong>Slightly Lower Pressure:</strong> The pressure is ${pressure} hPa, which is slightly lower than average. This decrease in pressure can lead to light precipitation as the air begins to cool and condense.</li>`;
+                report += `</ul>`;
+            } else {
+                report += `<p>No significant rainfall is expected due to the following observations:</p>`;
+                report += `<ul>`;
+                report += `<li><strong>Low Cloud Cover:</strong> The cloud cover is only ${cloudCover}%, indicating that the sky is mostly clear with little chance of rain.</li>`;
+                report += `<li><strong>Low Humidity:</strong> With humidity at ${humidity}%, the air is relatively dry, reducing the likelihood of precipitation.</li>`;
+                report += `<li><strong>Stable Atmospheric Pressure:</strong> The pressure is ${pressure} hPa, which is typical for stable weather conditions. High or stable pressure usually prevents cloud formation and rain.</li>`;
+                report += `</ul>`;
+            }
+
+            report += `</div><div class="conclusion"><strong>Conclusion:</strong> The weather conditions suggest that ${description.includes("rain") ? "rainfall" : "no significant rainfall"} is expected based on the analysis of cloud cover, humidity, and atmospheric pressure.</div>`;
+
+            return report;
+        };
+
+        // Function to generate a dynamic line graph predicting future rainfall
+        const generateRainfallGraph = (weatherData) => {
+            const ctx = document.getElementById('weatherGraph').getContext('2d');
+
+            // Placeholder data for future rainfall predictions (replace this with actual prediction data)
+            const futureData = [
+                { time: 'Now', rainfall: weatherData.rain ? weatherData.rain['1h'] || 0 : 0 },
+                { time: '1h', rainfall: (weatherData.rain ? weatherData.rain['1h'] || 0 : 0) + 1.5 },
+                { time: '2h', rainfall: (weatherData.rain ? weatherData.rain['1h'] || 0 : 0) + 2.2 },
+                { time: '3h', rainfall: (weatherData.rain ? weatherData.rain['1h'] || 0 : 0) + 0.8 },
+                { time: '4h', rainfall: (weatherData.rain ? weatherData.rain['1h'] || 0 : 0) + 1.1 },
+                { time: '5h', rainfall: (weatherData.rain ? weatherData.rain['1h'] || 0 : 0) + 2.5 },
+                { time: '6h', rainfall: (weatherData.rain ? weatherData.rain['1h'] || 0 : 0) + 3.3 },
+            ];
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: futureData.map(entry => entry.time),
+                    datasets: [{
+                        label: 'Predicted Rainfall (mm)',
+                        data: futureData.map(entry => entry.rainfall),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0)',
+                        fill: true,
+                        tension: .2,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Rainfall (mm)'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        };
+
+        // Function to generate a bar graph comparing cloud cover, humidity, and pressure
+        const generateParameterBarGraph = (weatherData) => {
+            const ctx = document.getElementById('parameterBarGraph').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Cloud Cover', 'Humidity', 'Pressure'],
+                    datasets: [{
+                        label: 'Weather Parameters',
+                        data: [weatherData.clouds.all, weatherData.main.humidity, weatherData.main.pressure],
+                        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+                        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        };
+
+        // Utility function to capitalize the first letter of a string
+        const capitalizeFirstLetter = (string) => {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        };
+    </script>
+     <script>
+        const menuIcon = document.querySelector('.menu-icon');
+        const navbar = document.querySelector('.navbar');
+    
+        menuIcon.addEventListener('click', () => {
+            navbar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

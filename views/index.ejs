@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RainVista</title>
+    <link rel="stylesheet" href="../css/landing.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="../js/snow.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header class="Header__container">
+    <div class="Header__left">
+      <div class="Header__title">
+        <h1>RainVista</h1>
+        <img src="../img/img4.jpg" alt="National Space Day" style="margin-left: 5%;">
+        <!-- <img src="../img/img5.jpg" alt="IIA" style="margin-left: 5%;"> -->
+      </div>
+    </div>
+    <button class="Header__toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <menu class="Header__menu">
+      <li class="Header__menuItem"><a style="color: white; font-weight: bold; font-size: medium;" href="/forecast">Predict</a></li>
+      <li class="Header__menuItem"><a style="color: white; font-weight: bold; font-size: medium;" href="/stats">Data_Analysis</a></li>
+      <li class="Header__menuItem"><a style="color: white; font-weight: bold; font-size: medium;" href="/standard_conditions">Standard Conditions</a></li>
+    </menu>
+  </header>
+  
+  <main>
+    <section class="Hero">
+      <div class="Hero__content">
+        <h2 class="Hero__title" style="color: #ff5733;">OUR Journey to this PoC</h2>
+        <!-- <p class="Hero__details">Our Journey on How we developed this POC</p> -->
+        <h4 class="Hero__title">Our Team</h4>
+        <p class="Hero__details">Bhuvanalakshmi R<br>Gopika S<br>Mamitha T<br>Jennathfirthose M</p>
+        <p class="Hero__subtitle">Department of Computer Science and engineering</p>
+        <p class="Hero__subtitle">Nadar Saraswathi college of engineering and technology,Theni</p>
+        <!-- <div class="Hero__action" role="button" tabindex=0><span class="Hero__actionText"> Book now</span></div> -->
+      </div>
+      <div class="Hero__image" id="Hero__image"></div>
+      <div class="Hero__mask"></div>
+      <canvas id="snowfall" class="Hero__snowfall"></canvas>
+    </section>
+  </main>
+  <div class="first-wrap">
+    <div class="first-div">
+      <div class="first-inner-div">
+        <h1>Step 1: Problem Identification and Designing</h1>
+        <p>We identified the need for accurate and timely rainfall prediction and designed a POC that integrates deep learning techniques with explainable AI (XAI) to enhance interpretability.</p>
+        <a href="#anchor">
+          <span class="glyphicon glyphicon-circle-arrow-down down-arrow"></span>
+        </a>      
+      </div>
+    </div>
+  </div>
+  
+  <div class="second-wrap">
+    <div class="second-div" id="anchor">
+      <p class="body-text">
+        <span class="line-separator"></span><b>Step 2: Data Analysis</b><br>Our team conducted an in-depth analysis of spatial-temporal data to understand patterns and anomalies. This analysis guided our model development, ensuring the use of relevant features for accurate forecasting.
+        <span class="line-separator"></span>
+      </p>
+    </div>
+    <div class="third-div">
+    </div>
+  </div>
+  
+  <div class="third-wrap">
+    <div class="fourth-div">
+      <p class="body-text">
+        <span class="line-separator"></span> <b>Step 3: Model Development and Validation</b><br><br>
+        We developed and validated a deep learning model specifically for rainfall nowcasting. The model's performance was tested against real-world data, refining the approach to achieve reliable predictions.
+        <span class="line-separator"></span>
+      </p>
+    </div>
+    <div class="fifth-div">
+    </div>
+  </div>
+  
+  <a href="#" id="back-to-top" title="Back to top">&uarr;</a>
+  
+<script>
+  const toggleButton = document.querySelector('.Header__toggle');
+  const menu = document.querySelector('.Header__menu');
+
+  toggleButton.addEventListener('click', () => {
+    menu.classList.toggle('open');
+    toggleButton.classList.toggle('open');
+  });
+</script>
+</body>
+</html>

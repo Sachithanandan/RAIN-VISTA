@@ -1,0 +1,522 @@
+@import url("https://fonts.googleapis.com/css?family=Heebo:900|Roboto|Satisfy&display=swap");
+
+body {
+  margin: 0;
+  background-color: #060431;
+  font-family: "Roboto", sans-serif;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.Header__container {
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5em;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1em 5vw;
+  width: 100%;
+  z-index: 1000;
+}
+
+.Header__left {
+  display: flex;
+  flex-direction: row;
+  font-family: "Satisfy", cursive;
+}
+
+.Header__title {
+  display: flex;
+  margin-left: 0.6em;
+}
+
+h1 {
+  font-weight: normal;
+  margin: 0.1em;
+}
+
+.Header__menu {
+  margin: auto 0;
+  display: flex;
+  flex-direction: row;
+  text-transform: uppercase;
+  font-size: 0.8em;
+}
+
+.Header__menuItem {
+  list-style-type: none;
+  margin: auto 1em;
+}
+
+.Header__title img {
+  max-width: 100%; /* Ensures the image scales down appropriately */
+  height: auto; /* Maintains aspect ratio */
+  display: block; /* Prevents images from overflowing */
+  margin-left: 5%; /* Adjusted for spacing */
+}
+
+/* Toggle Button CSS */
+.Header__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2em;
+  height: 2em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.Header__toggle span {
+  width: 100%;
+  height: 0.2em;
+  background: white;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+}
+
+/* Hide menu on mobile and display toggle button */
+@media (max-width: 1024px) {
+  .Header__title img {
+    max-width: 80%; /* Adjusts image size for smaller screens */
+    margin-left: 2%; /* Reduces margin for better fit */
+  }
+
+  .Header__menu {
+    display: none;
+    position: absolute;
+    top: 5em;
+    right: 5vw;
+    background-color: #060431;
+    flex-direction: column;
+    width: 70%;
+    padding: 1em;
+  }
+
+  .Header__menuItem {
+    margin: 1em 0;
+    text-align: right;
+  }
+
+  .Header__toggle {
+    display: flex;
+  }
+
+  .Header__toggle.open span:nth-child(1) {
+    transform: rotate(45deg) translate(0.3em, 0.3em);
+  }
+
+  .Header__toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .Header__toggle.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(0.3em, -0.3em);
+  }
+
+  .Header__menu.open {
+    display: flex;
+  }
+}
+
+.Hero {
+  color: white;
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+}
+
+
+.Hero__content {
+  margin: 25vh auto auto 8vw;
+  width: 50%;
+  text-align: left; /* Ensures text alignment on larger screens */
+}
+
+.Hero__title {
+  font-family: "Heebo", sans-serif;
+  font-weight: 900;
+  color: #ffffff; /* A catchy color for the main title */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Adds depth */
+  margin: 0.2em 0;
+  font-size: 3.5em;
+  line-height: 1.2em;
+}
+
+.Hero__subtitle,
+.Hero__details {
+  font-family: "Roboto", sans-serif;
+  color: #ffffff; /* Keep it white for readability */
+  opacity: 0.9;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5); /* Subtle shadow for clarity */
+  margin-top: 0.5em;
+  font-size: 2vw;
+  font-weight: 400;
+}
+
+.Hero__details {
+  margin-top: 0.3em;
+  font-size: 1.5em;
+  font-weight: 1000;
+  color: #5ffa30; /* Add a different shade for names */
+}
+
+
+@media (max-width: 1200px) {
+  .Hero__title {
+    font-size: 3em;
+    line-height: 1.1em;
+  }
+
+  .Hero__subtitle {
+    font-size: 2.5vw;
+  }
+
+  .Hero__details {
+    font-size: 1.4em;
+  }
+}
+
+@media (max-width: 768px) {
+  .Hero__content {
+    width: 70%;
+    margin: 30vh auto auto 5vw;
+  }
+
+  .Hero__title {
+    font-size: 2.5em;
+    line-height: 1.1em;
+  }
+
+  .Hero__subtitle {
+    font-size: 2.8vw;
+  }
+
+  .Hero__details {
+    font-size: 1.3em;
+  }
+}
+
+@media (max-width: 480px) {
+  .Hero__content {
+    width: 90%;
+    margin: 35vh auto auto 3vw;
+  }
+
+  .Hero__title {
+    font-size: 2em;
+  }
+
+  .Hero__subtitle {
+    font-size: 3.5vw;
+  }
+
+  .Hero__details {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-height: 500px) {
+  .Hero__title {
+    font-size: 1.8em;
+  }
+
+  .Hero__subtitle {
+    font-size: 2.5vw;
+  }
+
+  .Hero__details {
+    font-size: 1.1em;
+  }
+}
+
+.Hero__action {
+  height: 2em;
+  border-radius: 2em;
+  background-color: #c49000;
+  color: white;
+  border: none;
+  padding: 0.4em 2em;
+  box-shadow: 0px 0px 8px black;
+  position: relative;
+  width: 7em;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .Hero__content {
+    width: 90%;
+    margin: 40vh 2em auto 2em;
+  }
+}
+
+.Hero__action:hover {
+  animation: callToAction 1500ms ease-in infinite;
+}
+
+@keyframes callToAction {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.07);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+  60% {
+    transform: scale(1.07);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.Hero__actionText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  font-family: "Heebo", sans-serif;
+  font-size: 1.1em;
+  transform: translate(-50%, -50%);
+  text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.2);
+}
+
+@media (max-height: 500px) {
+  .Hero__title {
+    font-size: 2em;
+  }
+
+  .Hero__subtitle {
+    font-size: 1.5em;
+  }
+
+  .Hero__action {
+    height: 1.4em;
+    border-radius: 1.4em;
+    width: 4.5em;
+  }
+
+  .Hero__actionText {
+    font-size: 0.9em;
+  }
+}
+
+.Hero__image {
+  display: inline-block;
+  position: absolute;
+  z-index: -10;
+  height: 100vh;
+  width: 100%;
+  background-color: red;
+  background-image: url("https://media.istockphoto.com/id/177512311/photo/space-background-stars-universe-galaxy-and-nebula.webp?b=1&s=612x612&w=0&k=20&c=hLWjy2ggZzF0uehXdriYCplS5ILB4OSBWQw1IbbxWfE=");
+  background-position: center;
+  background-size: cover;
+}
+
+.Hero__mask {
+  position: absolute;
+  z-index: -8;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(#180047, #060231 50%);
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+.Hero__snowfall {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -6;
+  opacity: 0.75;
+}
+
+/* body {
+  overflow-x: hidden;
+} */
+/* Resize in Mobile View */
+
+@media (min-width: 0) and (max-width: 767px) {
+  p, .body-text {
+    font-size: 10px !important;
+  }
+  .down-arrow {
+    font-size: 20px !important;
+  }
+}
+/* Resize in Tablet View */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  p, .body-text {
+    font-size: 15px !important;
+  }
+  .down-arrow {
+    font-size: 30px !important;
+  }
+}
+/* Line Separators CSS */
+
+.line-separator {
+  display: block;
+  width: 50%;
+  height: 1px;
+  text-align: center;
+  margin: 20px auto;
+  border-bottom: 1px solid rgb(0, 0, 0);
+}
+/* First Wrap Background */
+
+.first-wrap {
+  height: 100%;
+  width: 100vw;
+  background: #ffffff url("../img/img2.jpg") no-repeat fixed;
+   background-size: cover;
+   background-position: 50% 50%;
+}
+/* Second Wrap Background */
+
+.second-wrap {
+  height: 100%;
+  width: 100vw;
+  background: #ffffff url("../img/img1.jpg") no-repeat fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+/* Third Wrap Background */
+
+.third-wrap {
+  height: 100%;
+  width: 100vw;
+  background: #ffffff url("../img/img3.jpg") no-repeat fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.first-div {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
+  .first-inner-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    .down-arrow {
+      font-size: 40px;
+      color: #fff;
+    }
+    p {
+      padding: 20px;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.second-div {
+  display: table;
+  height: 50vh;
+  width: 100vw;
+  background-color: rgba(255, 255, 255, 0.643);
+  p {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+  }
+  h4 {
+    text-align: center;
+    display: table-header-group;
+  }
+}
+
+.third-div {
+  display: table;
+  height: 50vh;
+  width: 100vw;
+  background-color: transparent;
+}
+
+.fourth-div {
+  display: table;
+  height: 50vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.2);
+  p {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+  }
+}
+
+.fifth-div {
+  display: table;
+  height: 50vh;
+  width: 100vw;
+  background-color: transparent;
+}
+
+#back-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 9999;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 30px;
+  background-color: rgb(255, 255, 255);
+  color: #000;
+  cursor: pointer;
+  border: 0;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: opacity 0.2s ease-out;
+  opacity: 0;
+}
+
+#back-to-top:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
+
+#back-to-top.show {
+  opacity: 1;
+}
+
+
+
+/* NEW UPDATE */
+.new-update {
+  padding: 20px;
+  text-align: center;
+  
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 2%;
+}
